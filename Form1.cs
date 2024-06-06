@@ -48,6 +48,7 @@ namespace SmartHome
             kitchen_status.ForeColor = SystemColors.GrayText;
             washroom_status.Font = new Font("µ»œﬂ", 25.8000011F, FontStyle.Regular, GraphicsUnit.Point, 134);
             washroom_status.ForeColor = SystemColors.GrayText;
+            panel1.AutoSize = true;
 
             //panelMenu.Controls.Add(leftBorderBtn);
         }
@@ -60,8 +61,8 @@ namespace SmartHome
 
         private void materialSwitch4_CheckedChanged(object sender, EventArgs e)
         {
-            
-            
+
+
         }
 
         private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
@@ -77,5 +78,6 @@ namespace SmartHome
                 flag_livingroom_light = 0;
             }
         }
+
     }
 }
