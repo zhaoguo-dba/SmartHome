@@ -79,18 +79,19 @@
             materialSwitch9 = new MaterialSkin.Controls.MaterialSwitch();
             tabPage4 = new TabPage();
             washroom_status = new Button();
+            tableLayoutPanel5 = new TableLayoutPanel();
             panel13 = new Panel();
             pictureBox13 = new PictureBox();
             materialSwitch13 = new MaterialSkin.Controls.MaterialSwitch();
-            panel14 = new Panel();
-            pictureBox14 = new PictureBox();
-            materialSwitch14 = new MaterialSkin.Controls.MaterialSwitch();
-            panel15 = new Panel();
-            pictureBox15 = new PictureBox();
-            materialSwitch15 = new MaterialSkin.Controls.MaterialSwitch();
             panel16 = new Panel();
             pictureBox16 = new PictureBox();
             materialSwitch16 = new MaterialSkin.Controls.MaterialSwitch();
+            panel15 = new Panel();
+            pictureBox15 = new PictureBox();
+            materialSwitch15 = new MaterialSkin.Controls.MaterialSwitch();
+            panel14 = new Panel();
+            pictureBox14 = new PictureBox();
+            materialSwitch14 = new MaterialSkin.Controls.MaterialSwitch();
             imageList1 = new ImageList(components);
             tableLayoutPanel2 = new TableLayoutPanel();
             panel17 = new Panel();
@@ -99,7 +100,6 @@
             panel18 = new Panel();
             pictureBox18 = new PictureBox();
             materialSwitch18 = new MaterialSkin.Controls.MaterialSwitch();
-            tableLayoutPanel5 = new TableLayoutPanel();
             materialTabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -132,20 +132,20 @@
             panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             tabPage4.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
             panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
-            panel14.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
-            panel15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).BeginInit();
+            panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
+            panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             panel17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
             panel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox18).BeginInit();
-            tableLayoutPanel5.SuspendLayout();
             SuspendLayout();
             // 
             // materialTabControl1
@@ -438,6 +438,7 @@
             // 
             // pictureBox7
             // 
+            pictureBox7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox7.BackColor = Color.Transparent;
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
             pictureBox7.Location = new Point(17, 19);
@@ -449,11 +450,12 @@
             // 
             // materialSwitch7
             // 
+            materialSwitch7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch7.AutoSize = true;
             materialSwitch7.BackColor = Color.Transparent;
             materialSwitch7.Depth = 0;
             materialSwitch7.ForeColor = Color.Transparent;
-            materialSwitch7.Location = new Point(102, 38);
+            materialSwitch7.Location = new Point(107, 36);
             materialSwitch7.Margin = new Padding(0);
             materialSwitch7.MouseLocation = new Point(-1, -1);
             materialSwitch7.MouseState = MaterialSkin.MouseState.HOVER;
@@ -477,6 +479,7 @@
             // 
             // pictureBox6
             // 
+            pictureBox6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
             pictureBox6.Location = new Point(17, 19);
@@ -488,11 +491,12 @@
             // 
             // materialSwitch6
             // 
+            materialSwitch6.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch6.AutoSize = true;
             materialSwitch6.BackColor = Color.Transparent;
             materialSwitch6.Depth = 0;
             materialSwitch6.ForeColor = Color.Transparent;
-            materialSwitch6.Location = new Point(102, 38);
+            materialSwitch6.Location = new Point(107, 36);
             materialSwitch6.Margin = new Padding(0);
             materialSwitch6.MouseLocation = new Point(-1, -1);
             materialSwitch6.MouseState = MaterialSkin.MouseState.HOVER;
@@ -516,6 +520,7 @@
             // 
             // pictureBox8
             // 
+            pictureBox8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox8.BackColor = Color.Transparent;
             pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
             pictureBox8.Location = new Point(17, 19);
@@ -527,11 +532,12 @@
             // 
             // materialSwitch8
             // 
+            materialSwitch8.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch8.AutoSize = true;
             materialSwitch8.BackColor = Color.Transparent;
             materialSwitch8.Depth = 0;
             materialSwitch8.ForeColor = Color.Transparent;
-            materialSwitch8.Location = new Point(102, 38);
+            materialSwitch8.Location = new Point(107, 36);
             materialSwitch8.Margin = new Padding(0);
             materialSwitch8.MouseLocation = new Point(-1, -1);
             materialSwitch8.MouseState = MaterialSkin.MouseState.HOVER;
@@ -555,6 +561,7 @@
             // 
             // pictureBox5
             // 
+            pictureBox5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox5.BackColor = Color.Transparent;
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
             pictureBox5.Location = new Point(17, 19);
@@ -566,11 +573,12 @@
             // 
             // materialSwitch5
             // 
+            materialSwitch5.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch5.AutoSize = true;
             materialSwitch5.BackColor = Color.Transparent;
             materialSwitch5.Depth = 0;
             materialSwitch5.ForeColor = Color.Transparent;
-            materialSwitch5.Location = new Point(102, 38);
+            materialSwitch5.Location = new Point(107, 36);
             materialSwitch5.Margin = new Padding(0);
             materialSwitch5.MouseLocation = new Point(-1, -1);
             materialSwitch5.MouseState = MaterialSkin.MouseState.HOVER;
@@ -635,6 +643,7 @@
             // 
             // pictureBox12
             // 
+            pictureBox12.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox12.BackColor = Color.Transparent;
             pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
             pictureBox12.Location = new Point(17, 19);
@@ -646,11 +655,12 @@
             // 
             // materialSwitch10
             // 
+            materialSwitch10.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch10.AutoSize = true;
             materialSwitch10.BackColor = Color.Transparent;
             materialSwitch10.Depth = 0;
             materialSwitch10.ForeColor = Color.Transparent;
-            materialSwitch10.Location = new Point(102, 38);
+            materialSwitch10.Location = new Point(107, 36);
             materialSwitch10.Margin = new Padding(0);
             materialSwitch10.MouseLocation = new Point(-1, -1);
             materialSwitch10.MouseState = MaterialSkin.MouseState.HOVER;
@@ -674,6 +684,7 @@
             // 
             // pictureBox10
             // 
+            pictureBox10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox10.BackColor = Color.Transparent;
             pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
             pictureBox10.Location = new Point(17, 19);
@@ -685,11 +696,12 @@
             // 
             // materialSwitch12
             // 
+            materialSwitch12.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch12.AutoSize = true;
             materialSwitch12.BackColor = Color.Transparent;
             materialSwitch12.Depth = 0;
             materialSwitch12.ForeColor = Color.Transparent;
-            materialSwitch12.Location = new Point(102, 38);
+            materialSwitch12.Location = new Point(107, 36);
             materialSwitch12.Margin = new Padding(0);
             materialSwitch12.MouseLocation = new Point(-1, -1);
             materialSwitch12.MouseState = MaterialSkin.MouseState.HOVER;
@@ -713,6 +725,7 @@
             // 
             // pictureBox9
             // 
+            pictureBox9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox9.BackColor = Color.Transparent;
             pictureBox9.Image = (Image)resources.GetObject("pictureBox9.Image");
             pictureBox9.Location = new Point(17, 19);
@@ -724,11 +737,12 @@
             // 
             // materialSwitch11
             // 
+            materialSwitch11.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch11.AutoSize = true;
             materialSwitch11.BackColor = Color.Transparent;
             materialSwitch11.Depth = 0;
             materialSwitch11.ForeColor = Color.Transparent;
-            materialSwitch11.Location = new Point(102, 38);
+            materialSwitch11.Location = new Point(107, 36);
             materialSwitch11.Margin = new Padding(0);
             materialSwitch11.MouseLocation = new Point(-1, -1);
             materialSwitch11.MouseState = MaterialSkin.MouseState.HOVER;
@@ -752,6 +766,7 @@
             // 
             // pictureBox11
             // 
+            pictureBox11.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox11.BackColor = Color.Transparent;
             pictureBox11.Image = (Image)resources.GetObject("pictureBox11.Image");
             pictureBox11.Location = new Point(17, 19);
@@ -763,11 +778,12 @@
             // 
             // materialSwitch9
             // 
+            materialSwitch9.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch9.AutoSize = true;
             materialSwitch9.BackColor = Color.Transparent;
             materialSwitch9.Depth = 0;
             materialSwitch9.ForeColor = Color.Transparent;
-            materialSwitch9.Location = new Point(102, 38);
+            materialSwitch9.Location = new Point(107, 36);
             materialSwitch9.Margin = new Padding(0);
             materialSwitch9.MouseLocation = new Point(-1, -1);
             materialSwitch9.MouseState = MaterialSkin.MouseState.HOVER;
@@ -800,6 +816,24 @@
             washroom_status.Text = "Status";
             washroom_status.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.ColumnCount = 2;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.Controls.Add(panel13, 0, 0);
+            tableLayoutPanel5.Controls.Add(panel16, 1, 1);
+            tableLayoutPanel5.Controls.Add(panel15, 0, 1);
+            tableLayoutPanel5.Controls.Add(panel14, 1, 0);
+            tableLayoutPanel5.Dock = DockStyle.Bottom;
+            tableLayoutPanel5.Location = new Point(3, 149);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 2;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.Size = new Size(405, 240);
+            tableLayoutPanel5.TabIndex = 12;
+            // 
             // panel13
             // 
             panel13.BackColor = Color.White;
@@ -814,6 +848,7 @@
             // 
             // pictureBox13
             // 
+            pictureBox13.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox13.BackColor = Color.Transparent;
             pictureBox13.Image = (Image)resources.GetObject("pictureBox13.Image");
             pictureBox13.Location = new Point(17, 19);
@@ -825,6 +860,7 @@
             // 
             // materialSwitch13
             // 
+            materialSwitch13.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch13.AutoSize = true;
             materialSwitch13.BackColor = Color.Transparent;
             materialSwitch13.Depth = 0;
@@ -838,84 +874,6 @@
             materialSwitch13.Size = new Size(58, 37);
             materialSwitch13.TabIndex = 5;
             materialSwitch13.UseVisualStyleBackColor = false;
-            // 
-            // panel14
-            // 
-            panel14.BackColor = Color.White;
-            panel14.BorderStyle = BorderStyle.Fixed3D;
-            panel14.Controls.Add(pictureBox14);
-            panel14.Controls.Add(materialSwitch14);
-            panel14.Dock = DockStyle.Fill;
-            panel14.Location = new Point(205, 3);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(197, 114);
-            panel14.TabIndex = 8;
-            // 
-            // pictureBox14
-            // 
-            pictureBox14.BackColor = Color.Transparent;
-            pictureBox14.Image = (Image)resources.GetObject("pictureBox14.Image");
-            pictureBox14.Location = new Point(17, 19);
-            pictureBox14.Name = "pictureBox14";
-            pictureBox14.Size = new Size(84, 77);
-            pictureBox14.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox14.TabIndex = 4;
-            pictureBox14.TabStop = false;
-            // 
-            // materialSwitch14
-            // 
-            materialSwitch14.AutoSize = true;
-            materialSwitch14.BackColor = Color.Transparent;
-            materialSwitch14.Depth = 0;
-            materialSwitch14.ForeColor = Color.Transparent;
-            materialSwitch14.Location = new Point(102, 38);
-            materialSwitch14.Margin = new Padding(0);
-            materialSwitch14.MouseLocation = new Point(-1, -1);
-            materialSwitch14.MouseState = MaterialSkin.MouseState.HOVER;
-            materialSwitch14.Name = "materialSwitch14";
-            materialSwitch14.Ripple = true;
-            materialSwitch14.Size = new Size(58, 37);
-            materialSwitch14.TabIndex = 5;
-            materialSwitch14.UseVisualStyleBackColor = false;
-            // 
-            // panel15
-            // 
-            panel15.BackColor = Color.White;
-            panel15.BorderStyle = BorderStyle.Fixed3D;
-            panel15.Controls.Add(pictureBox15);
-            panel15.Controls.Add(materialSwitch15);
-            panel15.Dock = DockStyle.Fill;
-            panel15.Location = new Point(3, 123);
-            panel15.Name = "panel15";
-            panel15.Size = new Size(196, 114);
-            panel15.TabIndex = 9;
-            // 
-            // pictureBox15
-            // 
-            pictureBox15.BackColor = Color.Transparent;
-            pictureBox15.Image = (Image)resources.GetObject("pictureBox15.Image");
-            pictureBox15.Location = new Point(17, 19);
-            pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(84, 77);
-            pictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox15.TabIndex = 4;
-            pictureBox15.TabStop = false;
-            // 
-            // materialSwitch15
-            // 
-            materialSwitch15.AutoSize = true;
-            materialSwitch15.BackColor = Color.Transparent;
-            materialSwitch15.Depth = 0;
-            materialSwitch15.ForeColor = Color.Transparent;
-            materialSwitch15.Location = new Point(102, 38);
-            materialSwitch15.Margin = new Padding(0);
-            materialSwitch15.MouseLocation = new Point(-1, -1);
-            materialSwitch15.MouseState = MaterialSkin.MouseState.HOVER;
-            materialSwitch15.Name = "materialSwitch15";
-            materialSwitch15.Ripple = true;
-            materialSwitch15.Size = new Size(58, 37);
-            materialSwitch15.TabIndex = 5;
-            materialSwitch15.UseVisualStyleBackColor = false;
             // 
             // panel16
             // 
@@ -931,6 +889,7 @@
             // 
             // pictureBox16
             // 
+            pictureBox16.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox16.BackColor = Color.Transparent;
             pictureBox16.Image = (Image)resources.GetObject("pictureBox16.Image");
             pictureBox16.Location = new Point(17, 19);
@@ -942,6 +901,7 @@
             // 
             // materialSwitch16
             // 
+            materialSwitch16.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             materialSwitch16.AutoSize = true;
             materialSwitch16.BackColor = Color.Transparent;
             materialSwitch16.Depth = 0;
@@ -955,6 +915,88 @@
             materialSwitch16.Size = new Size(58, 37);
             materialSwitch16.TabIndex = 5;
             materialSwitch16.UseVisualStyleBackColor = false;
+            // 
+            // panel15
+            // 
+            panel15.BackColor = Color.White;
+            panel15.BorderStyle = BorderStyle.Fixed3D;
+            panel15.Controls.Add(pictureBox15);
+            panel15.Controls.Add(materialSwitch15);
+            panel15.Dock = DockStyle.Fill;
+            panel15.Location = new Point(3, 123);
+            panel15.Name = "panel15";
+            panel15.Size = new Size(196, 114);
+            panel15.TabIndex = 9;
+            // 
+            // pictureBox15
+            // 
+            pictureBox15.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox15.BackColor = Color.Transparent;
+            pictureBox15.Image = (Image)resources.GetObject("pictureBox15.Image");
+            pictureBox15.Location = new Point(17, 19);
+            pictureBox15.Name = "pictureBox15";
+            pictureBox15.Size = new Size(84, 77);
+            pictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox15.TabIndex = 4;
+            pictureBox15.TabStop = false;
+            // 
+            // materialSwitch15
+            // 
+            materialSwitch15.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            materialSwitch15.AutoSize = true;
+            materialSwitch15.BackColor = Color.Transparent;
+            materialSwitch15.Depth = 0;
+            materialSwitch15.ForeColor = Color.Transparent;
+            materialSwitch15.Location = new Point(102, 38);
+            materialSwitch15.Margin = new Padding(0);
+            materialSwitch15.MouseLocation = new Point(-1, -1);
+            materialSwitch15.MouseState = MaterialSkin.MouseState.HOVER;
+            materialSwitch15.Name = "materialSwitch15";
+            materialSwitch15.Ripple = true;
+            materialSwitch15.Size = new Size(58, 37);
+            materialSwitch15.TabIndex = 5;
+            materialSwitch15.UseVisualStyleBackColor = false;
+            // 
+            // panel14
+            // 
+            panel14.BackColor = Color.White;
+            panel14.BorderStyle = BorderStyle.Fixed3D;
+            panel14.Controls.Add(pictureBox14);
+            panel14.Controls.Add(materialSwitch14);
+            panel14.Dock = DockStyle.Fill;
+            panel14.Location = new Point(205, 3);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(197, 114);
+            panel14.TabIndex = 8;
+            // 
+            // pictureBox14
+            // 
+            pictureBox14.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox14.BackColor = Color.Transparent;
+            pictureBox14.Image = (Image)resources.GetObject("pictureBox14.Image");
+            pictureBox14.Location = new Point(17, 19);
+            pictureBox14.Name = "pictureBox14";
+            pictureBox14.Size = new Size(84, 77);
+            pictureBox14.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox14.TabIndex = 4;
+            pictureBox14.TabStop = false;
+            // 
+            // materialSwitch14
+            // 
+            materialSwitch14.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            materialSwitch14.AutoSize = true;
+            materialSwitch14.BackColor = Color.Transparent;
+            materialSwitch14.Depth = 0;
+            materialSwitch14.ForeColor = Color.Transparent;
+            materialSwitch14.Location = new Point(102, 38);
+            materialSwitch14.Margin = new Padding(0);
+            materialSwitch14.MouseLocation = new Point(-1, -1);
+            materialSwitch14.MouseState = MaterialSkin.MouseState.HOVER;
+            materialSwitch14.Name = "materialSwitch14";
+            materialSwitch14.Ripple = true;
+            materialSwitch14.Size = new Size(58, 37);
+            materialSwitch14.TabIndex = 5;
+            materialSwitch14.UseVisualStyleBackColor = false;
             // 
             // imageList1
             // 
@@ -1060,24 +1102,6 @@
             materialSwitch18.TabIndex = 3;
             materialSwitch18.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel5
-            // 
-            tableLayoutPanel5.ColumnCount = 2;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.Controls.Add(panel13, 0, 0);
-            tableLayoutPanel5.Controls.Add(panel16, 1, 1);
-            tableLayoutPanel5.Controls.Add(panel15, 0, 1);
-            tableLayoutPanel5.Controls.Add(panel14, 1, 0);
-            tableLayoutPanel5.Dock = DockStyle.Bottom;
-            tableLayoutPanel5.Location = new Point(3, 149);
-            tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 2;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.Size = new Size(405, 240);
-            tableLayoutPanel5.TabIndex = 12;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -1139,18 +1163,19 @@
             panel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             tabPage4.ResumeLayout(false);
+            tableLayoutPanel5.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel13.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
-            panel14.ResumeLayout(false);
-            panel14.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
-            panel15.ResumeLayout(false);
-            panel15.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
             panel16.ResumeLayout(false);
             panel16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).EndInit();
+            panel15.ResumeLayout(false);
+            panel15.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
+            panel14.ResumeLayout(false);
+            panel14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             panel17.ResumeLayout(false);
@@ -1159,7 +1184,6 @@
             panel18.ResumeLayout(false);
             panel18.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox18).EndInit();
-            tableLayoutPanel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
