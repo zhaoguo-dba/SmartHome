@@ -1,26 +1,29 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using System.Runtime.InteropServices;
-using System.Text;
+using NAudio.Wave;
+using System.Speech.Recognition;
+using MathNet.Numerics.IntegralTransforms;
 
 namespace SmartHome
 {
-    public partial class Form1 : MaterialForm
+    public partial class SmatHomeApp : MaterialForm
     {
 
         private readonly MaterialSkinManager materialSkinManager;
         //用来记录按钮状态，从而实现status更新，只写有相应后台逻辑的即可
         int flag_livingroom_light = 0;
+        private SpeechRecognitionEngine recognizer;
+        private WaveIn waveIn;
+        private WaveFileWriter writer;
+        private bool recording = false;
+        private const int maxSilenceCount = 5; // 最大静默次数
+        private int currentSilenceCount = 0; // 当前静默次数
+        private string outputFilePath = "test.wav";
+        private const string wakeUpPhrase = "小度小度";
+        private SpeechService service;
 
-        private const string API_KEY = "8TYtBwK5XqMzXDQT1h4jrkta";
-        private const string SECRET_KEY = "4yjTGWBU4CF5s09Bsd9MQSyL63AhqQhL";
 
-        private static string currentAlias = "temp_alias";
-        [DllImport("winmm.dll", SetLastError = true)]
-        private static extern long mciSendString(string strCommand, StringBuilder strReturn, int iReturnLength, IntPtr hwndCallback);
-
-        public Form1()
+        public SmatHomeApp()
         {
             InitializeComponent();
 
@@ -61,6 +64,7 @@ namespace SmartHome
             panel1.AutoSize = true;
 
             //panelMenu.Controls.Add(leftBorderBtn);
+            SpeechForm_Load(sender,e);
         }
 
 
@@ -89,52 +93,7 @@ namespace SmartHome
             }
         }
 
-        /*
-         * 语音合成
-         * 在调用该接口后进行页面的修改
-         */
-        private bool text2audio(string text)
-        {
-            var client = new Baidu.Aip.Speech.Tts(API_KEY, SECRET_KEY);
-            client.Timeout = 60000;  // 修改超时时间
-
-            var option = new Dictionary<string, object>()
-            {
-                {"spd", 5}, // 语速
-                            // {"vol", 7}, // 音量
-                {"per", 4}  // 发音人，4：情感度丫丫童声
-            };
-            var result = client.Synthesis(text, option);
-
-            if (!result.Success)
-            {
-                // 合成失败
-                return false;
-            }
-
-            // 停止并关闭当前播放的音频
-            StopAudio();
-
-            File.WriteAllBytes("temp.mp3", result.Data);
-
-            mciSendString("open temp.mp3 alias temp_alias", null, 0, IntPtr.Zero);
-            mciSendString("play temp_alias", null, 0, IntPtr.Zero);
-            StringBuilder strReturn = new StringBuilder(64);
-            do
-            {
-                mciSendString($"status {currentAlias} mode", strReturn, 64, IntPtr.Zero);
-            } while (!strReturn.ToString().Contains("stopped"));
-
-            mciSendString($"close {currentAlias}", null, 0, IntPtr.Zero);
-            return true;
-        }
-
-        private void StopAudio()
-        {
-            // 停止当前播放的音频并关闭资源
-            mciSendString($"stop {currentAlias}", null, 0, IntPtr.Zero);
-            mciSendString($"close {currentAlias}", null, 0, IntPtr.Zero);
-        }
+       
 
         /**
          * pos：0-客厅；1-卧室；2-厨房；3-厕所
@@ -196,6 +155,130 @@ namespace SmartHome
                 targetSwitch.Checked = false;
             }
         }
+
+        private void SpeechForm_Load(object sender, EventArgs e)
+        {
+            recognizer = new SpeechRecognitionEngine();
+            waveIn = new WaveIn();
+
+            // 添加语法规则，识别唤醒指令
+            Choices wakeUpChoices = new Choices(wakeUpPhrase);
+            GrammarBuilder wakeUpGrammar = new GrammarBuilder(wakeUpChoices);
+            Grammar grammar = new Grammar(wakeUpGrammar);
+            recognizer.LoadGrammar(grammar);
+
+            // 订阅事件
+            recognizer.SpeechRecognized += Recognizer_SpeechRecognized;
+
+            // 设置录音设备参数
+            waveIn.DeviceNumber = 0;
+            waveIn.WaveFormat = new WaveFormat(16000, 1); // 16kHz 采样率，单声道
+            waveIn.DataAvailable += WaveIn_DataAvailable;
+
+            // 启动识别引擎
+            recognizer.SetInputToDefaultAudioDevice();
+            recognizer.RecognizeAsync(RecognizeMode.Multiple);
+
+            Console.WriteLine("Listening for wake-up command...");
+
+            Console.ReadLine(); // 按回车键退出程序
+
+            if (recording)
+            {
+                // 停止录音
+                StopRecording();
+            }
+        }
+
+        private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            // 当识别到唤醒指令时，开始录音
+            if (e.Result.Text == wakeUpPhrase)
+            {
+                // 存储预录音缓冲区
+                if (File.Exists(outputFilePath))
+                {
+                    File.Delete(outputFilePath);
+                }
+                writer = new WaveFileWriter(outputFilePath, waveIn.WaveFormat);
+                StartRecording();
+            }
+        }
+
+        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            if (recording)
+            {
+                // 这里进行录音数据的处理
+                writer.Write(e.Buffer, 0, e.BytesRecorded);
+
+                // 计算录音数据的能量
+                double energy = GetEnergyLevel(e.Buffer);
+
+                // 如果能量低于阈值，增加静默计数器
+                if (energy < 10) // 
+                {
+                    currentSilenceCount++;
+                }
+                else
+                {
+                    currentSilenceCount = 0;
+                }
+
+                // 如果静默持续时间超过阈值，停止录音
+                if (currentSilenceCount >= maxSilenceCount)
+                {
+                    StopRecording();
+                    service = new SpeechService();
+                    service.EnterServic(File.ReadAllBytes(outputFilePath), "wav");
+
+                }
+            }
+        }
+
+        private void StartRecording()
+        {
+           
+            if (!recording)
+            {
+                waveIn.BufferMilliseconds = 1000;
+                waveIn.StartRecording();
+                recording = true;
+            }
+          
+        }
+
+        private void StopRecording()
+        {
+            recording = false;
+            waveIn.StopRecording();
+            writer.Dispose();
+        }
+
+        private static double GetEnergyLevel(byte[] buffer)
+        {
+            // 将音频数据转换为双精度浮点数数组
+            double[] samples = new double[buffer.Length / 2];
+            for (int i = 0; i < samples.Length; i++)
+            {
+                short sample = BitConverter.ToInt16(buffer, i * 2);
+                samples[i] = sample / (double)short.MaxValue;
+            }
+
+            // 计算均方根（RMS）
+            double sumOfSquares = 0;
+            foreach (var sample in samples)
+            {
+                sumOfSquares += sample * sample;
+            }
+            double rms = Math.Sqrt(sumOfSquares / samples.Length);
+
+            // 计算能量值
+            double energy = rms * rms * samples.Length;
+
+            return energy;
+        }
+
 
     }
 }
