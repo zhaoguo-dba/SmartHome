@@ -16,11 +16,12 @@ namespace SmartHome
         private WaveIn waveIn;
         private WaveFileWriter writer;
         private bool recording = false;
-        private const int maxSilenceCount = 5; // 最大静默次数
+        private const int maxSilenceCount = 3; // 最大静默次数
         private int currentSilenceCount = 0; // 当前静默次数
         private string outputFilePath = "test.wav";
         private const string wakeUpPhrase = "小度小度";
         private SpeechService service;
+       
 
 
         public SmatHomeApp()
@@ -36,8 +37,41 @@ namespace SmartHome
                        Primary.Cyan500,
                        Accent.DeepOrange200,
                        TextShade.WHITE);
+            service = new SpeechService();
+            service.SpeechServiceCompleted += Service_SpeechServiceCompleted;
 
             //materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
+        }
+
+        private void Service_SpeechServiceCompleted(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateControls(message)));
+            }
+            else
+            {
+                UpdateControls(message);
+            }
+
+        }
+        private void UpdateControls(string message)
+        {
+            if (message.Equals("010"))
+            {
+                if (flag_livingroom_light == 0)
+                {
+                    lounge_status.Text = "灯已打开";
+                    flag_livingroom_light = 1;
+                    materialSwitch1.Checked = true;
+                }
+                else
+                {
+                    lounge_status.Text = "灯已关闭";
+                    flag_livingroom_light = 0;
+                    materialSwitch1.Checked = false;
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -93,68 +127,7 @@ namespace SmartHome
             }
         }
 
-       
-
-        /**
-         * pos：0-客厅；1-卧室；2-厨房；3-厕所
-         */
-        private void changeStatus(int pos, string status, string furniture)
-        {
-            var buttonMap = new Dictionary<int, Button>
-            {
-                { 0, lounge_status },
-                { 1, bedroom_status },
-                { 2, kitchen_status },
-                { 3, washroom_status }
-            };
-
-            var switchMap = new Dictionary<(int, string), MaterialSwitch>
-            {
-                { (0, "灯"), materialSwitch1 },
-                { (0, "电视"), materialSwitch2 },
-                { (0, "电视"), materialSwitch3 },
-                { (0, "电视"), materialSwitch4 },
-
-                { (1, "灯"), materialSwitch5 },
-                { (1, "空调"), materialSwitch6 },
-                { (1, "电视"), materialSwitch7 },
-                { (1, "电视"), materialSwitch8 },
-
-                { (2, "灯"), materialSwitch9 },
-                { (2, "空调"), materialSwitch10 },
-                { (2, "电视"), materialSwitch11 },
-                { (2, "电视"), materialSwitch12 },
-
-                { (3, "灯"), materialSwitch13 },
-                { (3, "空调"), materialSwitch14 },
-                { (3, "电视"), materialSwitch15 },
-                { (3, "电视"), materialSwitch16 }
-            };
-
-            if (!buttonMap.ContainsKey(pos) || !switchMap.ContainsKey((pos, furniture)))
-            {
-                return;
-            }
-
-            var targetButton = buttonMap[pos];
-            var targetSwitch = switchMap[(pos, furniture)];
-
-            UpdateStatus(targetButton, targetSwitch, furniture, status);
-        }
-
-        private void UpdateStatus(Button targetButton, MaterialSwitch targetSwitch, string furniture, string status)
-        {
-            if ("打开".Equals(status))
-            {
-                targetButton.Text = $"{furniture}已打开";
-                targetSwitch.Checked = true;
-            }
-            else
-            {
-                targetButton.Text = $"{furniture}已关闭";
-                targetSwitch.Checked = false;
-            }
-        }
+    
 
         private void SpeechForm_Load(object sender, EventArgs e)
         {
@@ -229,7 +202,7 @@ namespace SmartHome
                 if (currentSilenceCount >= maxSilenceCount)
                 {
                     StopRecording();
-                    service = new SpeechService();
+                   
                     service.EnterServic(File.ReadAllBytes(outputFilePath), "wav");
 
                 }
