@@ -25,7 +25,7 @@ namespace SmartHome
         [DllImport("winmm.dll", SetLastError = true)]
         private static extern long mciSendString(string strCommand, StringBuilder strReturn, int iReturnLength, IntPtr hwndCallback);
 
-
+       private DataTools dataTools = new DataTools();
         /*
          * 语音识别接口
          */
@@ -35,7 +35,6 @@ namespace SmartHome
             var client = new Asr(APP_ID, APP_KEY, SECRET_KEY);
             client.Timeout = 60000;
             var options = new Dictionary<string, object> { { "dev_pid", 1537 } };
-            client.Timeout = 120000; // 若语音较长，建议设置更大的超时时间. ms
             var json = client.Recognize(data, format, 16000, options);
             int err_no = (int)json["err_no"];
             if (err_no > 0)
@@ -43,6 +42,7 @@ namespace SmartHome
                 return "error";
             }
             string result = json["result"].ToString();
+            Console.WriteLine(result );
             return result;
 
         }
@@ -51,7 +51,7 @@ namespace SmartHome
         * 语音合成
         * 在调用该接口后进行页面的修改
         */
-        private bool text2audio(string text)
+        public bool text2audio(string text)
         {
             var client = new Baidu.Aip.Speech.Tts(APP_KEY, SECRET_KEY);
             client.Timeout = 60000;  // 修改超时时间
@@ -103,10 +103,12 @@ namespace SmartHome
             string msg = this.speechRecognition(data, format);
             if (msg != null)
             {
-                changeStatus(msg);
-                text2audio(msg);
-                //用不同编码对应不同状态和房间
-                SpeechServiceCompleted?.Invoke("010");
+                string code = changeStatus(msg);
+                SpeechServiceCompleted?.Invoke(code);
+            }
+            else
+            {
+                SpeechServiceCompleted?.Invoke("00000");
             }
         }
         private string getGBKStr(string text)
@@ -118,59 +120,74 @@ namespace SmartHome
 
         }
 
+    
+
 
         //文本信息提取，获取文本中的房间名和电器名，并更改状态
-        private void changeStatus(String text)
+        private String changeStatus(String text)
         {
+            
             var client = new Baidu.Aip.Nlp.Nlp(APP_KEY, SECRET_KEY);
             client.Timeout = 60000;  // 修改超时时间
             string gbkText = this.getGBKStr(text);
             var result = client.Lexer(gbkText);
+            StringBuilder sb = new StringBuilder();
+            string status = CheckStatus(text);
+            if (status.Equals("-1"))
+            {
+                return "00000";
+                
+            }
+            sb.Append(status);
+
             if (result != null)
             {
                 JObject obj = (JObject)result;
-                List<string> words = analysisContent(obj);
-                int status = CheckStatus(text);//1表示需要打开，0表示需要关闭
-                Console.WriteLine("状态为：" + words[0]); //表示状态
-                Console.WriteLine("房间名为：" + words[1]); //表示房间
-                Console.WriteLine("电器名为：" + words[2]); //表示电器
-            }
-
-        }
-        //提取文本信息后，更改对应目标状态
-        private List<string> analysisContent(JObject obj)
-        {
-
-            List<string> words = new List<string>();
-            var items = obj["items"];
-            int i = 1;
-            foreach (var item in items)
-            {
-                var baseWords = item["basic_words"];
-                foreach (var word in baseWords)
+                var items = obj["items"];
+                foreach (var item in items)
                 {
-                   words.Add((string)word);
+                    var baseWords = item["basic_words"];
+                    foreach (var word in baseWords)
+                    {
+                        string key = word.ToString();
+                        if (DataTools.room.ContainsKey(key))
+                        {
+                            sb.Append(DataTools.room[key]);
+                        }
+                        else if (DataTools.equipment.ContainsKey(key))
+                        {
+                            sb.Append(DataTools.equipment[key]);
+                        }
+
+                        if (sb.ToString().Length == 4)
+                        {
+                            return sb.ToString();
+                        }
+                        
+                    }
                 }
-                i++;
+
             }
-            return words;
+            return sb.ToString();
+
         }
+        
 
 
         //检测文本中包含开还是关，返回期望的目标状态
-        private int CheckStatus(string input)
+        private string CheckStatus(string input)
         {
             if (input.Contains("开"))
             {
-                return 1;
+                return "1";
             }
             else if (input.Contains("关"))
             {
-                return 0;
+                return "0";
             }
             else
             {
-                return -1; // 如果既没有“开”也没有“关”，可以根据需要返回其他值
+                return "-1"; // 如果既没有“开”也没有“关”，可以根据需要返回其他值
             }
         }
 

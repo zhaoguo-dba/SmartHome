@@ -298,7 +298,6 @@
             materialSwitch4.Size = new Size(58, 37);
             materialSwitch4.TabIndex = 3;
             materialSwitch4.UseVisualStyleBackColor = true;
-            materialSwitch4.CheckedChanged += materialSwitch4_CheckedChanged;
             // 
             // panel3
             // 

@@ -2,7 +2,6 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using NAudio.Wave;
 using System.Speech.Recognition;
-using MathNet.Numerics.IntegralTransforms;
 
 namespace SmartHome
 {
@@ -57,21 +56,103 @@ namespace SmartHome
         }
         private void UpdateControls(string message)
         {
-            if (message.Equals("010"))
+            
+            if (message.Equals("00000"))
             {
-                if (flag_livingroom_light == 0)
+                service.text2audio("我没有听清楚，请再说一次！");
+            }
+            else
+            {
+                string status = message.Substring(0,1);
+                string roomCode = message.Substring(1, 1);
+                string equipCode = message.Substring(2);
+                string equipName = DataTools.equipment.FirstOrDefault(x => x.Value == equipCode).Key;
+                changeStatus(int.Parse(roomCode), status, equipName);
+            }
+            
+        }
+
+        /**
+        * pos：0-客厅；1-卧室；2-厨房；3-厕所
+        */
+        private void changeStatus(int pos, string status, string furniture)
+        {
+            var buttonMap = new Dictionary<int, Button>
+            {
+                { 0, lounge_status },
+                { 1, bedroom_status },
+                { 2, kitchen_status },
+                { 3, washroom_status }
+            };
+
+            var switchMap = new Dictionary<(int, string), MaterialSwitch>
+            {
+                { (0, "灯"), materialSwitch1 },
+                { (0, "音响"), materialSwitch2 },
+                { (0, "空调"), materialSwitch3 },
+                { (0, "电视"), materialSwitch4 },
+
+                { (1, "台灯"), materialSwitch5 },
+                { (1, "闹钟"), materialSwitch6 },
+                { (1, "空调"), materialSwitch7 },
+                { (1, "灯"), materialSwitch8 },
+
+                { (2, "灯"), materialSwitch9 },
+                { (2, "微波炉"), materialSwitch10 },
+                { (2, "电饭煲"), materialSwitch11 },
+                { (2, "水壶"), materialSwitch12 },
+
+                { (3, "灯"), materialSwitch13 },
+                { (3, "排风扇"), materialSwitch14 },
+                { (3, "洗衣机"), materialSwitch15 },
+                { (3, "浴霸"), materialSwitch16 }
+            };
+
+            if (!buttonMap.ContainsKey(pos) || !switchMap.ContainsKey((pos, furniture)))
+            {
+                return;
+            }
+
+            var targetButton = buttonMap[pos];
+            var targetSwitch = switchMap[(pos, furniture)];
+
+            UpdateStatus(targetButton, targetSwitch, furniture, status);
+        }
+
+        private void UpdateStatus(Button targetButton, MaterialSwitch targetSwitch, string furniture, string status)
+        {
+            if (targetSwitch.Checked) {
+                if ("0".Equals(status))
                 {
-                    lounge_status.Text = "灯已打开";
-                    flag_livingroom_light = 1;
-                    materialSwitch1.Checked = true;
+                   
+                    targetButton.Text = $"{furniture}已关闭";
+                    targetSwitch.Checked = false;
+                    service.text2audio(targetButton.Text);
                 }
                 else
                 {
-                    lounge_status.Text = "灯已关闭";
-                    flag_livingroom_light = 0;
-                    materialSwitch1.Checked = false;
+                    service.text2audio($"{furniture}已打开,无需再开");
                 }
             }
+            else
+            {
+                if ("0".Equals(status))
+                {
+                   service.text2audio($"{furniture}已打开,无需再开");
+                }
+                else
+                {
+                    targetButton.Text = $"{furniture}已打开";
+                    targetSwitch.Checked = true;
+                    service.text2audio(targetButton.Text);
+                }
+
+            }
+            if (File.Exists(outputFilePath))
+            {
+                File.Delete(outputFilePath);
+            }
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -101,17 +182,6 @@ namespace SmartHome
             SpeechForm_Load(sender,e);
         }
 
-
-        private void materialExpansionPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void materialSwitch4_CheckedChanged(object sender, EventArgs e)
-        {
-
-
-        }
 
         private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
         {
@@ -204,6 +274,7 @@ namespace SmartHome
                     StopRecording();
                    
                     service.EnterServic(File.ReadAllBytes(outputFilePath), "wav");
+                    currentSilenceCount=0;
 
                 }
             }
