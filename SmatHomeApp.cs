@@ -59,7 +59,7 @@ namespace SmartHome
             
             if (message.Equals("00000"))
             {
-                service.text2audio("我没有听清楚，请再说一次！");
+                service.Text2Audio("我没有听清楚，请再说一次！");
             }
             else
             {
@@ -67,7 +67,7 @@ namespace SmartHome
                 string roomCode = message.Substring(1, 1);
                 string equipCode = message.Substring(2);
                 string equipName = DataTools.equipment.FirstOrDefault(x => x.Value == equipCode).Key;
-                changeStatus(int.Parse(roomCode), status, equipName);
+                ChangeStatus(int.Parse(roomCode), status, equipName);
             }
             
         }
@@ -75,7 +75,7 @@ namespace SmartHome
         /**
         * pos：0-客厅；1-卧室；2-厨房；3-厕所
         */
-        private void changeStatus(int pos, string status, string furniture)
+        private void ChangeStatus(int pos, string status, string furniture)
         {
             var buttonMap = new Dictionary<int, Button>
             {
@@ -127,32 +127,28 @@ namespace SmartHome
                    
                     targetButton.Text = $"{furniture}已关闭";
                     targetSwitch.Checked = false;
-                    service.text2audio(targetButton.Text);
+                    service.Text2Audio(targetButton.Text);
                 }
                 else
                 {
-                    service.text2audio($"{furniture}已打开,无需再开");
+                    service.Text2Audio($"{furniture}已打开,无需再开");
                 }
             }
             else
             {
                 if ("0".Equals(status))
                 {
-                   service.text2audio($"{furniture}已打开,无需再开");
+                   service.Text2Audio($"{furniture}已打开,无需再开");
                 }
                 else
                 {
                     targetButton.Text = $"{furniture}已打开";
                     targetSwitch.Checked = true;
-                    service.text2audio(targetButton.Text);
+                    service.Text2Audio(targetButton.Text);
                 }
 
             }
-            if (File.Exists(outputFilePath))
-            {
-                File.Delete(outputFilePath);
-            }
-
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -183,7 +179,7 @@ namespace SmartHome
         }
 
 
-        private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
+        private void MaterialSwitch1_CheckedChanged(object sender, EventArgs e)
         {
             if (flag_livingroom_light == 0)
             {
@@ -222,10 +218,6 @@ namespace SmartHome
             recognizer.SetInputToDefaultAudioDevice();
             recognizer.RecognizeAsync(RecognizeMode.Multiple);
 
-            Console.WriteLine("Listening for wake-up command...");
-
-            Console.ReadLine(); // 按回车键退出程序
-
             if (recording)
             {
                 // 停止录音
@@ -238,13 +230,10 @@ namespace SmartHome
             // 当识别到唤醒指令时，开始录音
             if (e.Result.Text == wakeUpPhrase)
             {
-                // 存储预录音缓冲区
-                if (File.Exists(outputFilePath))
-                {
-                    File.Delete(outputFilePath);
-                }
+                StopRecording();
                 writer = new WaveFileWriter(outputFilePath, waveIn.WaveFormat);
                 StartRecording();
+                
             }
         }
 
@@ -265,16 +254,36 @@ namespace SmartHome
                 }
                 else
                 {
-                    currentSilenceCount = 0;
+                    currentSilenceCount = 0; // 重置静默计数
                 }
-
                 // 如果静默持续时间超过阈值，停止录音
                 if (currentSilenceCount >= maxSilenceCount)
                 {
                     StopRecording();
+                    try
+                    {
+                        // 使用FileStream打开文件
+                        using (FileStream fileStream = new FileStream(outputFilePath, FileMode.Open))
+                        {
+                            // 从文件流中读取所有字节到一个字节数组中
+                            byte[] fileData = new byte[fileStream.Length];
+                            fileStream.Read(fileData, 0, fileData.Length);
+                            service.EnterServic(fileData, "wav");
+                            currentSilenceCount = 0;
+                          
+
+                        }
+                        if (File.Exists(outputFilePath))
+                        {
+                            File.Delete(outputFilePath);
+                        }
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine("无法访问文件： " + ex.Message);
+                    }
                    
-                    service.EnterServic(File.ReadAllBytes(outputFilePath), "wav");
-                    currentSilenceCount=0;
+                    
 
                 }
             }
@@ -294,9 +303,16 @@ namespace SmartHome
 
         private void StopRecording()
         {
-            recording = false;
-            waveIn.StopRecording();
-            writer.Dispose();
+            if (recording)
+            {
+                recording = false;
+                waveIn.StopRecording();
+                if (writer != null)
+                {
+                    writer.Dispose(); // 释放之前的 WaveFileWriter
+                    writer = null;
+                }
+            }
         }
 
         private static double GetEnergyLevel(byte[] buffer)

@@ -25,12 +25,11 @@ namespace SmartHome
         [DllImport("winmm.dll", SetLastError = true)]
         private static extern long mciSendString(string strCommand, StringBuilder strReturn, int iReturnLength, IntPtr hwndCallback);
 
-       private DataTools dataTools = new DataTools();
         /*
          * 语音识别接口
          */
 
-        public String speechRecognition(byte[] data, string format)
+        public String SpeechRecognition(byte[] data, string format)
         {
             var client = new Asr(APP_ID, APP_KEY, SECRET_KEY);
             client.Timeout = 60000;
@@ -51,7 +50,7 @@ namespace SmartHome
         * 语音合成
         * 在调用该接口后进行页面的修改
         */
-        public bool text2audio(string text)
+        public bool Text2Audio(string text)
         {
             var client = new Baidu.Aip.Speech.Tts(APP_KEY, SECRET_KEY);
             client.Timeout = 60000;  // 修改超时时间
@@ -100,10 +99,10 @@ namespace SmartHome
          */
         public void EnterServic(byte[] data, string format)
         {
-            string msg = this.speechRecognition(data, format);
+            string msg = this.SpeechRecognition(data, format);
             if (msg != null)
             {
-                string code = changeStatus(msg);
+                string code = ChangeStatus(msg);
                 SpeechServiceCompleted?.Invoke(code);
             }
             else
@@ -111,7 +110,7 @@ namespace SmartHome
                 SpeechServiceCompleted?.Invoke("00000");
             }
         }
-        private string getGBKStr(string text)
+        private string GetGBKStr(string text)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             byte[] bytes = Encoding.GetEncoding("GBK").GetBytes(text);
@@ -124,12 +123,12 @@ namespace SmartHome
 
 
         //文本信息提取，获取文本中的房间名和电器名，并更改状态
-        private String changeStatus(String text)
+        private String ChangeStatus(String text)
         {
             
             var client = new Baidu.Aip.Nlp.Nlp(APP_KEY, SECRET_KEY);
             client.Timeout = 60000;  // 修改超时时间
-            string gbkText = this.getGBKStr(text);
+            string gbkText = this.GetGBKStr(text);
             var result = client.Lexer(gbkText);
             StringBuilder sb = new StringBuilder();
             string status = CheckStatus(text);

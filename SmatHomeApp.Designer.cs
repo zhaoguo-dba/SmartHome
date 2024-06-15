@@ -1,4 +1,5 @@
-﻿namespace SmartHome
+﻿
+namespace SmartHome
 {
     partial class SmatHomeApp
     {
@@ -380,7 +381,6 @@
             materialSwitch1.Size = new Size(58, 37);
             materialSwitch1.TabIndex = 5;
             materialSwitch1.UseVisualStyleBackColor = false;
-            materialSwitch1.CheckedChanged += materialSwitch1_CheckedChanged;
             // 
             // tabPage2
             // 
@@ -1186,6 +1186,7 @@
             ResumeLayout(false);
         }
 
+       
         #endregion
 
         private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
